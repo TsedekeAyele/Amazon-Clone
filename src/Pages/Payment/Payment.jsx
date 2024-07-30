@@ -52,10 +52,10 @@ function Payment() {
         url: `/payment/create?total=${total * 100}`,
       });
       // console.log(response.data);
-      const clientSecret = response.data?.clientSecret;
+      const clintSecret = response.data?.clintSecret;
 
       // 2. Client side(React side confirmation)
-      const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      const { paymentIntent } = await stripe.confirmCardPayment(clintSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
@@ -76,11 +76,11 @@ function Payment() {
 
       // empty the basket
       dispatch({ type: Type.EMPTY_BASKET });
-      // -======npm 
+      // -======npm
       setProcessing(false);
       navigate("/orders", { state: { msg: "you have placed new order" } });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       setProcessing(false);
     }
   };
